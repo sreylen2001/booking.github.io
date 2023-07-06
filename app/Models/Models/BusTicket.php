@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Models\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class BusTicket extends Model
+{
+    use HasFactory;
+
+    protected $table = 'new_bus_tickets';
+
+    protected $fillable = [
+        'id',
+        'bus_id',
+        'from',
+        'to',
+        'fare_amount',
+        'departure_time',
+        'estimated_arrival_time',
+        'created_at',
+        'update_at'
+    ];
+
+    public function bus(){
+        return $this->belongsTo(Bus::class);
+    }
+    // public function bus(){
+    //     return $this->belongsTo(Bus::class);
+    // }
+
+    public function scopeGettable()
+    {
+        return $this->table;
+    }
+}

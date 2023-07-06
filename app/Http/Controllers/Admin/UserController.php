@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
@@ -19,13 +18,13 @@ class UserController extends Controller
     
     public function index(Request $request): View{
         // dd($users);
-        $data['users'] = DB::table('users')->where('status', '1')->paginate(5);
+        $data['new_users'] = DB::table('new_users')->where('status', '1')->paginate(5);
         return view('admins.admin_users.index', $data);
         
     }
 
     public function edit($id){
-        $data['users'] = DB::table('users')->find($id);
+        $data['new_users'] = DB::table('new_users')->find($id);
         return view('admins.admin_users.edit', $data);
     }
     
@@ -54,7 +53,7 @@ class UserController extends Controller
         $data['email'] = $request->email;
         $data['phone'] = $request->phone;
 
-        $i = DB::table('users')->where('id', $request->id)->update($data);
+        $i = DB::table('new_users')->where('id', $request->id)->update($data);
         if($i){
             return redirect()->route('admin.admin_user');
         }else{
@@ -64,7 +63,7 @@ class UserController extends Controller
 
     public function delete($id){
 
-        $affected = DB::table('users')
+        $affected = DB::table('new_users')
         ->where('id', $id)
         ->update([
             'status' => '0'
@@ -73,4 +72,5 @@ class UserController extends Controller
             return redirect()->route('admin.admin_user');
         }
     }
+
 }

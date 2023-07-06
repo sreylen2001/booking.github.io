@@ -2,13 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\ApiBusController;
 use App\Http\Controllers\API\ApiDriverController;
 use App\Http\Controllers\API\ApiCustomerController;
 use App\Http\Controllers\API\ApiRegionController;
 use App\Http\Controllers\API\ApiDestinationController;
 use App\Http\Controllers\API\ApiBookbusController;
+use App\Http\Controllers\API\StripeController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\Endpoint\EpRoleController;
+use App\Http\Controllers\Endpoint\EpBusController;
+use App\Http\Controllers\Endpoint\EpBusTicketController;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +35,25 @@ Route::post('admin/login', [AuthController::class, 'adminLogin']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('request-reset-password', [PasswordResetController::class, 'send_reset_email_password']);
 Route::post('reset-password/{token}', [PasswordResetController::class, 'resetPassword']);
+//List Information
+Route::get('roles', [EpRoleController::class, 'list']);
+Route::get('role/detail/{id}', [EpRoleController::class, 'detail']);
+
+Route::post('stripe', [StripeController::class, 'payment']);
+// Route::get('check', [StripePaymentController::class, 'getData']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
-    //Bus Information
-    Route::get('bus/detail/{id}', [ApiBusController::class, 'detail']);
-    Route::get('bus/list', [ApiBusController::class, 'list']);
 
+    //Bus Information
+    Route::post('bus/create', [EpBusController::class, 'create']);
+    Route::get('bus/detail/{id}', [EpBusController::class, 'detail']);
+    Route::get('bus/list', [EpBusController::class, 'list']);
+
+    //Bus ticket Information
+    Route::post('ticket/create', [EpBusTicketController::class, 'create']);
+    Route::get('ticket/detail/{id}', [EpBusTicketController::class, 'detail']);
+    Route::get('ticket/list', [EpBusTicketController::class, 'list']);
+    
     //Driver Information
     Route::get('driver/detail/{id}', [ApiDriverController::class, 'detail']);
     Route::get('driver/list', [ApiDriverController::class, 'list']);
@@ -58,6 +75,11 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('booking/create', [ApiBookbusController::class, 'create']);
     Route::get('booking/detail/{id}', [ApiBookbusController::class, 'detail']);
     Route::get('booking/list', [ApiBookbusController::class, 'list']);
+
+    //Payment
+    //Route::post('stripe', [StripeController::class, 'payment']);
+    //Route::get('check', [StripePaymentController::class, 'getData']);
+
 
     Route::get('profile', [AuthController::class, 'profile']);
     Route::post('/profile/change-password', [AuthController::class, 'change_password']);

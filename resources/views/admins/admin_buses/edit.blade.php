@@ -16,28 +16,19 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-6">
-                                            <input type="hidden" name="id" value="{{$buses->id}}">
+                                            <input type="hidden" name="id" value="{{$new_buses->id}}">
                                             <div class="mb-3 row">
-                                                <label class="col-lg-4 col-form-label" for="bus_number">Bus Number</label>
+                                                <label class="col-lg-4 col-form-label" for="bus_number">Plate Numbers</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="bus_number" id="bus_number" value="{{$buses->bus_number}}">
+                                                    <input type="text" class="form-control" name="plate_number" id="plate_number" value="{{$new_buses->plate_number}}">
                                                 </div>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-lg-4 col-form-label" for="bus_plate_number">Plate Numbers</span></label>
-                                               
-                                                <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="bus_plate_number" id="bus_plate_number" value="{{$buses->bus_plate_number}}">
-                                                </div>
-                                            </div>
-
-                
 
                                             <div class="mb-3 row">
                                                 <label class="col-lg-4 col-form-label" for="bus_type">Bus Type</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="bus_type" id="bus_type" value="{{$buses->bus_type}}">
+                                                    <input type="text" class="form-control" name="bus_type" id="bus_type" value="{{$new_buses->bus_type}}">
                                                 </div>
                                         </div> 
                                         </div>
@@ -47,7 +38,14 @@
                                                     <label class="col-lg-4 col-form-label" for="capacity">Capacity</span>
                                                     </label>
                                                     <div class="col-lg-6" class="form-file" textalign="center">
-                                                        <input type="number" class="form-file-input form-control" name="capacity" id="capacity" value="{{$buses->capacity}}">
+                                                        <input type="number" class="form-file-input form-control" name="capacity" id="capacity" value="{{$new_buses->capacity}}">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 input-group">
+                                                    <label class="col-lg-4 col-form-label" for="capacity">Bus Status</span>
+                                                    </label>
+                                                    <div class="col-lg-6" class="form-file" textalign="center">
+                                                        <input type="number" class="form-file-input form-control" name="bus_status" id="bus_status" value="{{$new_buses->bus_status}}">
                                                     </div>
                                                 </div>
     

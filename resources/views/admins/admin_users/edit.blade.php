@@ -23,21 +23,21 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-6">
-                                            <input type="hidden" name="id" value="{{$users->id}}">
+                                            <input type="hidden" name="id" value="{{$new_users->id}}">
                                             <div class="mb-3 row">
                                                 <label class="col-lg-4 col-form-label" for="name">Name</label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="name" id="name" value="{{$users->name}}">
+                                                    <input type="text" class="form-control" name="name" id="name" value="{{$new_users->name}}">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-lg-4 col-form-label" for="gender">Gender</span></label>
                                                 {{-- <select class="select2-with-label-single js-states d-block" id="gender" name="gender">
-                                                    <option value="{{$users->gender ?? ''}}"></option>
+                                                    <option value="{{$new_users->gender ?? ''}}"></option>
                                                     
                                                 </select> --}}
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="gender" id="gender" value="{{$users->gender}}">
+                                                    <input type="text" class="form-control" name="gender" id="gender" value="{{$new_users->gender}}">
                                                 </div>
                                             </div>
 
@@ -45,7 +45,7 @@
                                                 <label class="col-lg-4 col-form-label" for="email">DOB</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="dob" id="dob" value="{{$users->dob}}">
+                                                    <input type="text" class="form-control" name="dob" id="dob" value="{{$new_users->dob}}">
                                                 </div>
                                             </div> --}}
 
@@ -53,7 +53,7 @@
                                                 <label class="col-lg-4 col-form-label" for="profession">Profession</span>
                                                 </label>
                                                 <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="profession" id="profession" value="{{$users->profession}}">
+                                                    <input type="text" class="form-control" name="profession" id="profession" value="{{$new_users->profession}}">
                                                 </div>
                                         </div> 
                                         </div>
@@ -63,7 +63,7 @@
                                                     <label class="col-lg-4 col-form-label" for="profile_photo">Profile</span>
                                                     </label>
                                                     <div class="col-lg-6" class="form-file" textalign="center">
-                                                        <input type="file" class="form-file-input form-control" name="profile_photo" id="profile_photo" value="{{$users->profile_photo}}">
+                                                        <input type="file" class="form-file-input form-control" name="profile_photo" id="profile_photo" value="{{$new_users->profile_photo}}">
                                                     </div>
                                                 </div>
     
@@ -71,7 +71,7 @@
                                                     <label class="col-lg-4 col-form-label" for="email">Email</span>
                                                     </label>
                                                     <div class="col-lg-6">
-                                                        <input type="text" class="form-control" name="email" id="email" value="{{$users->email}}">
+                                                        <input type="text" class="form-control" name="email" id="email" value="{{$new_users->email}}">
                                                     </div>
                                                 </div>
     
@@ -79,14 +79,14 @@
                                                     <label class="col-lg-4 col-form-label" for="phone">Contact</span>
                                                     </label>
                                                     <div class="col-lg-6">
-                                                        <input type="text" class="form-control" name="phone" id="phone" value="{{$users->phone}}">
+                                                        <input type="text" class="form-control" name="phone" id="phone" value="{{$new_users->phone}}">
                                                     </div>
                                                 </div>
     
                                                 {{-- <div class="mb-3 row">
                                                     <label class="col-lg-4 col-form-label" for="status">Status</span>
                                                     </label>
-                                                    @if ($value = $users->status = 1)
+                                                    @if ($value = $new_users->status = 1)
                                                         @php
                                                             $value = 'Active';
                                                         @endphp

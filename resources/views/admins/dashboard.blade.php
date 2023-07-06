@@ -32,9 +32,9 @@
                                             <div class="card-body d-flex px-4 pb-0 justify-content-between">
                                                 <div>
                                             
-                                                    <h4 class="fs-18 font-w600 mb-4 text-nowrap">Total Customers</h4>
+                                                    <h4 class="fs-18 font-w600 mb-4 text-nowrap">Total Users</h4>
                                                     <div class="d-flex align-items-center">
-                                                        <h2 class="fs-32 font-w700 mb-0" style="color:#886CC0">{{ $customers }}</h2>
+                                                        <h2 class="fs-32 font-w700 mb-0" style="color:#886CC0">{{ $new_users }}</h2>
                                                         {{-- <span class="d-block ms-4">
                                                             <i class="fas fa-user-clock"></i>
                                                         </span> --}}
@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-xl-6 col-sm-6">
+                                    {{-- <div class="col-xl-6 col-sm-6">
                                         <div class="card">
                                             <div class="card-body d-flex px-4 pb-0 justify-content-between">
                                                 <div>
@@ -58,7 +58,7 @@
                                                 <div><i class="fas fa-address-book"></i></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     
                                 </div>
                             </div>

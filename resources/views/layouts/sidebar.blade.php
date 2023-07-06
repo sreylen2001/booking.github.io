@@ -11,7 +11,8 @@
                 <span class="nav-text">Bus</span>
             </a>
             </li>
-            <li><a href="{{ route ('admin.admin_driver') }}" class="" aria-expanded="false">
+
+            {{-- <li><a href="{{ route ('admin.admin_driver') }}" class="" aria-expanded="false">
                 <i class="fa fa-wheelchair" aria-hidden="true"></i>                
                 <span class="nav-text">Driver</span>
             </a>
@@ -45,7 +46,7 @@
                 <i class="fas fa-user-clock"></i>
                 <span class="nav-text">Schedule of Travel</span>
             </a>
-            </li>
+            </li>  --}}
         
         </ul>
     </div>

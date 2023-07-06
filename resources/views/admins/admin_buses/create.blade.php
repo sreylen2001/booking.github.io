@@ -12,16 +12,11 @@
                     <div class="basic-form">
                         <form action="{{route('admin_bus.save')}}" method="post" enctype="multipart/form-data">
                             @csrf
+                            
                             <div class="mb-3 row">
-                                <label class="col-sm-3 col-form-label" for="bus_number">Bus Numbers</label>
+                                <label class="col-sm-3 col-form-label" for="plate_number">Plate Numbers</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="bus_number" id="bus_number">
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-3 col-form-label" for="bus_plate_number">Plate Numbers</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="bus_plate_number" id="bus_plate_number">
+                                    <input type="text" class="form-control" name="plate_number" id="plate_number">
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -37,6 +32,14 @@
                                     <input type="number" class="form-control" name="capacity" id="capacity">
                                 </div>
                             </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" for="bus_status">Bus Status</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="bus_status" id="bus_status">
+                                </div>
+                            </div>
+
                             <br>
                             <div class="mb-3 row">
                                 <div class="col-sm-10">

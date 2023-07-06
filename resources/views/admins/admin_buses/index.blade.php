@@ -22,28 +22,34 @@
                             <thead>
                                 <tr>
                                     <th><strong>#</strong></th>
-                                    <th><strong>Bus Number</strong></th>
+                                    <th><strong>User</strong></th>
                                     <th><strong>Plate Number</strong></th>
                                     <th><strong>Bus Type</strong></th>
                                     <th><strong>Capacity</strong></th>
+                                    <th><strong>Bus Status</strong></th>
                                     <th><strong>Action</strong></th>
-                                    <th><strong></strong></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($buses as $item)
+                                @foreach ($new_buses as $item)
                                 <tr>
                                     <td><strong>{{ $item->id }}</strong></td>
-                                    <td><div class="d-flex align-items-center"><img src="" class="rounded-lg me-2" width="24" alt=""> <span class="w-space-no">{{ $item->bus_number }}</span></div></td>
-                                    <td>{{ $item->bus_plate_number }}</td>
+                                    <td></td>
+                                    {{-- @foreach ($users as $data)
+                                    <td value="{{$data->id}}">{{$data->name}}</td>
+
+                                    @endforeach --}}
+                                    <td>{{ $item->plate_number }}</td>
                                     <td>{{ $item->bus_type }}</td>
                                     <td>{{ $item->capacity }}</td>
+                                    <td>{{ $item->bus_status }}</td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ url('admin/admins_bus/edit/'.$item->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
                                             <a href="{{ url('admin/admins_bus/delete/'.$item->id) }}" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -51,13 +57,13 @@
                         <footer>
                             <div class="row">
                                 <div class="col-7">
-                                    <p>showing {{ $buses->firstItem() }} - {{ $buses->lastItem() }} of {{ $buses->total() }}</p>
+                                    <p>showing {{ $new_buses->firstItem() }} - {{ $new_buses->lastItem() }} of {{ $new_buses->total() }}</p>
                                 </div>
 
                                 <div class="col-5">
                                     <div class="float-end">
                                         <ul class="pagination pagination-xs pagination-gutter">
-                                            {{$buses->links()}}
+                                            {{$new_buses->links()}}
                                             
                                         </ul>
                                     </div>
@@ -71,5 +77,24 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+<script type="text/javascript">
+    $('#user_id').on('change', function (e) {
+        var user_id = $(this).val();
+        
+        $.get("{{ route('admin.user') }}", {user_id:user_id}, function (data) { 
+            $.each(data, function (i, l) { 
+                $(user_id).append($('<option/>',{
+                        value : l.id,
+                        text : l.name
+                    }))
+             })
+         })
+    });
+
+</script>
+
+@endsection
 
 @endsection

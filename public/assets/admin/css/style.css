@@ -282,6 +282,9 @@ body {
   line-height: 1.5;
   color: #393939;
   background-color: #F8F8F8;
+  background-repeat: no-repeat;
+  height: 100px; /* You must set a specified height */
+  background-position: center;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 

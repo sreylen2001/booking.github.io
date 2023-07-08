@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,8 @@ class UserController extends Controller
     }
     
     public function index(Request $request): View{
-        // dd($users);
         $data['new_users'] = DB::table('new_users')->where('status', '1')->paginate(5);
+
         return view('admins.admin_users.index', $data);
         
     }
@@ -71,6 +72,18 @@ class UserController extends Controller
         if($affected){
             return redirect()->route('admin.admin_user');
         }
+    }
+
+    public function search(Request $request){
+        $search = $_GET['query'];
+
+        $bus_query = User::where('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('email', 'LIKE', '%'.$search.'%')
+            ->orWhere('phone', 'LIKE', '%'.$search.'%')
+            ->orWhere('gender', 'LIKE', '%'.$search.'%')->with('new_roles')->get();
+            
+        return $bus_query;
+
     }
 
 }

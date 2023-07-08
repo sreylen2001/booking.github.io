@@ -359,8 +359,8 @@ class ComposerStaticInitbef3a7e85c0b4c4ad1f4f427116406cc
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -544,8 +544,15 @@ class ComposerStaticInitbef3a7e85c0b4c4ad1f4f427116406cc
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\API\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/AuthController.php',
+        'App\\Http\\Controllers\\API\\BookticketController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/BookticketController.php',
+        'App\\Http\\Controllers\\API\\BusController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/BusController.php',
+        'App\\Http\\Controllers\\API\\PaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/PaymentController.php',
         'App\\Http\\Controllers\\API\\StripeController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/StripeController.php',
+        'App\\Http\\Controllers\\API\\TicketController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/TicketController.php',
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
+        'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
+        'App\\Http\\Controllers\\Admin\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/RoleController.php',
         'App\\Http\\Controllers\\Admin\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -578,6 +585,8 @@ class ComposerStaticInitbef3a7e85c0b4c4ad1f4f427116406cc
         'App\\Models\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Models/Payment.php',
         'App\\Models\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Models/Role.php',
         'App\\Models\\Models\\User' => __DIR__ . '/../..' . '/app/Models/Models/User.php',
+        'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',
+        'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

@@ -19,16 +19,16 @@ class BusTicket extends Model
         'fare_amount',
         'departure_time',
         'estimated_arrival_time',
+        'status',
         'created_at',
         'update_at'
     ];
-
-    public function bus(){
+    public function new_buses(){
         return $this->belongsTo(Bus::class);
     }
-    // public function bus(){
-    //     return $this->belongsTo(Bus::class);
-    // }
+    public function new_users(){
+        return $this->belongsTo(User::class);
+    }
 
     public function scopeGettable()
     {

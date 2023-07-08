@@ -12,7 +12,19 @@
                     <div class="basic-form">
                         <form action="{{route('admin_bus.save')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" for="bus_id">Bus Driver</label>
+                                <div class="col-sm-9">
+                                    <select class="default-select form-control wide mb-3" id="user_id" name="user_id">
+                                        <option value="0" selected="true" disabled="true">Select Bus Driver</option>
+                                        @foreach ($new_users as $data)
+                                            <option value="{{$data->id}}">{{$data->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="plate_number">Plate Numbers</label>
                                 <div class="col-sm-9">
@@ -53,4 +65,22 @@
         </div>
     </div>
 </div>
+@section('scripts')
+<script type="text/javascript">
+    $('#user_id').on('change', function (e) {
+        var bus_id = $(this).val();
+        
+        $.get("{{ route('admin.user') }}", {user_id:user_id}, function (data) { 
+            $.each(data, function (i, l) { 
+                $(user_id).append($('<option/>',{
+                        value : l.id,
+                        text : l.name
+                    }))
+             })
+         })
+    });
+
+</script>
+
+@endsection
 @endsection

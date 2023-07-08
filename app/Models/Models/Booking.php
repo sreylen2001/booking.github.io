@@ -17,6 +17,7 @@ class Booking extends Model
         'bus_id',
         'number_of_seats',
         'total_amount',
+        'status',
         'created_at',
         'update_at'
     ];
@@ -25,7 +26,7 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bus(){
+    public function new_buses(){
         return $this->belongsTo(Bus::class);
     }
 

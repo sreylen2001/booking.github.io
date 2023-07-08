@@ -24,7 +24,7 @@
 
 </head>
 
-<body class="vh-100">
+<body class="vh-100" style="background-image: url('{{ asset('assets/front/img/cambtm.png')}}');">
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
@@ -33,6 +33,7 @@
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
+                                    
 									<div class="text-center mb-3">
 										<a href="index.html"><img src="images/logo-full.png" alt=""></a>
 									</div>

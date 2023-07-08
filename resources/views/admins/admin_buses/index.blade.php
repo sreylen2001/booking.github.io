@@ -21,6 +21,7 @@
                         <table class="table table-responsive-md">
                             <thead>
                                 <tr>
+                        
                                     <th><strong>#</strong></th>
                                     <th><strong>User</strong></th>
                                     <th><strong>Plate Number</strong></th>
@@ -28,16 +29,18 @@
                                     <th><strong>Capacity</strong></th>
                                     <th><strong>Bus Status</strong></th>
                                     <th><strong>Action</strong></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($new_buses as $item)
                                 <tr>
                                     <td><strong>{{ $item->id }}</strong></td>
-                                    <td></td>
-                                    {{-- @foreach ($users as $data)
-                                    <td value="{{$data->id}}">{{$data->name}}</td>
-
+                                    <td><strong>{{ $item->user_id }}</strong></td>
+                                    {{-- @foreach ($new_users as $data)
+                                        <td value="{{$data->id}}">
+                                            {{$new_users->name}}
+                                        </td>
                                     @endforeach --}}
                                     <td>{{ $item->plate_number }}</td>
                                     <td>{{ $item->bus_type }}</td>

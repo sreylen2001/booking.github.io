@@ -17,7 +17,7 @@ class AdminController extends Controller
     public function index(Request $request){
         // dd($users);
         $data['new_users'] = DB::table('new_users')->where('active', 1)->get();
-        $users = User::paginate(6);
+        $data = User::paginate(6);
         return view('admins.admin_user.index', $data);
         
     }

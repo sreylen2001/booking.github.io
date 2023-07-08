@@ -5,13 +5,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Table of Users</h4>
-                    <li class="nav-item d-flex align-items-center">
-                        <div class="input-group search-area" type="get" action="{{route('search.user')}}">
-                            <input type="search" name="search" class="form-control" placeholder="Search here...">
-                            <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
-                        </div>
-                    </li>
+                    <h4 class="card-title">Table of Booking Information</h4>
+                    <a class="btn btn-rounded btn-primary" href="{{ route('user_booking.create') }}" role="button"><span class="btn-icon-start text-info"><i class="fa fa-plus color-info"></i>
+                    </span>Booking</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -19,19 +15,15 @@
                             <thead>
                                 <tr>
                                     <th><strong>#</strong></th>
-                                    <th><strong>Name</strong></th>
-                                    <th><strong>Role</strong></th>
-                                    <th><strong>Gender</strong></th>
-                                    <th><strong>Profession</strong></th>
-                                    <th><strong>Profile</strong></th>
-                                    <th><strong>Email</strong></th>
-                                    <th><strong>Contact</strong></th>
+                                    <th><strong>User ID</strong></th>
+                                    <th><strong>Bus ID</strong></th>
+                                    <th><strong>Number of seats</strong></th>
+                                    <th><strong>Total Amount</strong></th>
                                     <th><strong>Status</strong></th>
-                                    <th><strong>Action</strong></th>
                                     
                                 </tr>
                             </thead>
-                            <tbody>
+                            {{-- <tbody>
                                 @foreach ($new_users as $item)
                                 <tr>
                                     <td><strong>{{ $item->id }}</strong></td>
@@ -49,7 +41,7 @@
 
                                     <td>{{ $item->gender }}</td>
                                     {{-- <td>{{ $item->dob }}</td> --}}
-                                    <td>{{ $item->profession }}</td>
+                                    {{-- <td>{{ $item->profession }}</td>
                                     <td>{{ $item->profile_photo }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone }}</td>
@@ -63,34 +55,26 @@
                                         @endphp
                                     @endif
                                     <td>{{ $value }}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="{{ url('admin/admins_user/edit/'.$item->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                            <a href="{{ url('admin/admins_user/delete/'.$item->id) }}" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
+                                    
                                     <td></td>
                                 </tr>
                                 @endforeach
 
                                 
-                            </tbody>
-                            
+                            </tbody> --}}
+                             
                         </table>
                         <footer>
                             <div class="row">
                                 <div class="col-7">
-                                    <p>showing {{ $new_users->firstItem() }} - {{ $new_users->lastItem() }} of {{ $new_users->total() }}</p>
+                                    <p>showing {{ $new_bookings->firstItem() }} - {{ $new_bookings->lastItem() }} of {{ $new_bookings->total() }}</p>
                                 </div>
 
                                 <div class="col-5">
                                     <div class="float-end">
                                         <ul class="pagination pagination-xs pagination-gutter">
-                                            {{$new_users->links()}}
-                                            {{-- <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{$users->links()}}</a>
-                                            </li> --}}
-                                        
-                                            
+                                            {{$new_bookings->links()}}
+                                          
                                         </ul>
                                     </div>
                                 </div>

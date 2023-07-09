@@ -60,6 +60,7 @@ Route::group([
             Route::get('bus/detail/{id}', [EpBusController::class, 'detail']);
             Route::get('bus/list', [EpBusController::class, 'list']);
             Route::get('bus-available', [EpBusController::class, 'busAllAvailable']);
+            Route::get('bus/available', [EpBusController::class, 'searchBusFromTo']);
 
             //Bus ticket Information
             Route::post('ticket/create', [EpBusTicketController::class, 'create']);

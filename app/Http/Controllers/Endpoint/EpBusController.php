@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Endpoint;
 use App\Http\Controllers\Controller;
 use App\Models\Models\Booking;
 use App\Models\Models\Bus;
+use App\Models\Models\BusTicket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -165,5 +166,27 @@ class EpBusController extends Controller
         }
 
         return $bus_seats;
+    }
+    public function searchBusFromTo(Request $request) {
+        $data = $request->validate([
+            'from' => 'required',
+            'to' => 'required'
+        ]);
+
+        $busAvailable = collect();
+
+        $buses = BusTicket::query()->where('from', $data['from'])->where('to', $data['to'])->get();
+        $today = now()->setTime(0,0,0,0);
+        foreach ($buses as $bus) {
+            $buses = Bus::query()->where('created_at', '>=', $today)->where('id', $bus['bus_id'])->get();
+            foreach ($buses as $item) {
+                $booking = Booking::query()->where('bus_id', $item['id'])->where('created_at', '>=', $today)->get()->toArray();
+                if(count($booking) < $item['capacity']) {
+                    $busAvailable->push($item);
+                }
+            }
+        }
+
+        return $this->success($busAvailable, 'Get Bus Available from to');
     }
 }

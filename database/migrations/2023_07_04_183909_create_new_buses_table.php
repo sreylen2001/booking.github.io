@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('new_buses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('user_id');
             $table->string('plate_number');
             $table->string('bus_type');
             $table->bigInteger('capacity');
+            $table->integer('book_seat');
             $table->boolean('status')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('new_users');
             $table->timestamps();
         });
     }

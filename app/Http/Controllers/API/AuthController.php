@@ -5,18 +5,21 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Models\User;
 use App\Models\Admin;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         //return 0;
         $data = $request->validate([
-            'role_id'=> 'required|int|max:4',
+            'role_id' => 'required|int|max:4',
             'name' => 'required|string|max:255',
             'gender' => 'required|min:4|max:6',
             'phone' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9',
@@ -24,40 +27,27 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
             'confirm_password' => 'required|string|same:password',
         ]);
-
         $users = User::create([
-            'role_id'=> $data['role_id'],
+            'role_id' => $data['role_id'],
             'name' => $data['name'],
             'gender' => $data['gender'],
             'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
+        // $token = $users->createToken(time())->plainTextToken;
+        $token = $users->createToken(User::USER_TOKEN)->plainTextToken;
 
-        $token = $users->createToken(time())->plainTextToken;
-        $res = [
+        return $this->success([
             'user' => $users,
             'token' => $token,
-        ];
-        if($res){
-            return response()->json([
-                'message' => 'Your account has been created! Please Login..',
-                'data' => $res
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Please check your data Again!',
-
-            ], 404);
-        }
-
-       
+        ], 'User has been register successfully');
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         auth()->user()->tokens()->delete();
-        return response(['message' => 'Logged Out Successfully!!!']);
+        return $this->success(null, 'Logout successfully!');
     }
 
     public function adminLogin(Request $request)
@@ -84,28 +74,25 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
             'email' => 'required|string|max:255',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $data['email'])->first();
+        $user = User::query()->where('email', $data['email'])->first();
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            return response(['message' => 'Invalid Credentials!!!'], 401);
+//            return response(['message' => 'Invalid Credentials!!!'], 401);
+            return $this->error('Invalid Credentials!!!', Response::HTTP_UNPROCESSABLE_ENTITY);
         } else {
             //$token = $user->createToken('fundaProjectTokenLogin')->plainTextToken;
-            $token = $user->createToken(time())->plainTextToken;
-            $response = [
-                'message' => 'Login Successfully!',
+            $token = $user->createToken(User::USER_TOKEN)->plainTextToken;
+            return $this->success([
                 'user' => $user,
                 'token' => $token,
-
-            ];
-
-            return response($response, 200);
+            ], 'User has been register successfully');
         }
     }
 
@@ -125,8 +112,8 @@ class AuthController extends Controller
     public function updateProfile(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|min:2|max:100',
-            'gender' => 'required|min:4|max:6',
+            'name' => 'min:2|max:100',
+            'gender' => 'min:4|max:6',
             'profession' => 'min:0|max:100|nullable',
             'profile_photo' => 'image|mimes:jpeg,bmp,png|nullable',
         ]);
@@ -138,32 +125,30 @@ class AuthController extends Controller
             ], 422);
         }
         $user = $request->user();
-            if($request->hasFile('profile_photo')){
-                if($user->profile_photo){
-                    $old_path = public_path().'uploads/profile_images/'
-                        .$user->profile_photo;
-                    if(File::exists($old_path)){
-                        File::delete($old_path);
-                    }
+
+        if($request->hasFile('profile_photo')){
+            if($user->profile_photo){
+                $old_path = public_path().'uploads/profile_images/'
+                    .$user->profile_photo;
+                if(File::exists($old_path)){
+                    File::delete($old_path);
                 }
-                $image_name = 'profile-photo-'.time().'.'.$request->profile_photo->extension();
-                    
-                $request->profile_photo->move(public_path('/uploads/profile_images'), $image_name);
-        
-            }else{
-                $image_name = $user->profile_photo;
             }
-           
-            $user -> update([
-                'name' => $request -> name,
-                'gender' => $request -> gender,
-                'profile_photo' => $image_name,
-                'profession' => $request -> profession,
-            ]);
-           
-            return response()->json([
-                'message' => 'Your profile successfully updated!!!',
-            ], 200);
+            $image_name = 'profile-photo-'.time().'.'.$request->profile_photo->extension();
+
+            $request->profile_photo->move(public_path('/uploads/profile_images'), $image_name);
+
+        }else{
+            $image_name = $user->profile_photo;
+        }
+
+        $request['profile_photo'] = $image_name;
+
+        $user->update($request->toArray());
+
+        return response()->json([
+            'message' => 'Your profile successfully updated!!!',
+        ], 200);
     }
 
 
@@ -196,5 +181,9 @@ class AuthController extends Controller
         }
     }
 
-
+    public function getUser(): JsonResponse
+    {
+        $user = Auth::user();
+        return $this->success([$user], 'Get user successfully');
+    }
 }

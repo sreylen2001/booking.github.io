@@ -17,7 +17,7 @@ class Bus extends Model
         'plate_number',
         'bus_type',
         'capacity',
-        'bus_status',
+        'book_seat',
         'status',
         'created_at',
         'update_at'

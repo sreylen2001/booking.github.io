@@ -42,6 +42,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public const USER_TOKEN = 'userToken';
+
     /**
      * The attributes that should be cast.
      *

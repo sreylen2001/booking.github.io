@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('new_bus_tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bus_id')->constrained();
+            $table->unsignedBigInteger('bus_id');
             $table->string('from');
             $table->string('to');
             $table->double('fare_amount');
             $table->time('departure_time');
             $table->time('estimated_arrival_time');
+
+            $table->foreign('bus_id')->references('id')->on('new_buses');
             $table->timestamps();
         });
     }

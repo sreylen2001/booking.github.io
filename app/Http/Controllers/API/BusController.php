@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Models\Booking;
 use App\Models\Models\Bus;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Models\User;
-use Illuminate\Support\Facades\Validator;
+
 class BusController extends Controller
 {
     public function __construct()
@@ -27,7 +28,7 @@ class BusController extends Controller
         //$MergeArray = $se->merge($data);
         //$MergeArray = array_merge($isConnectedM,$isConnectedA);
         return view('admins.admin_buses.index',$data);
-        
+
     }
 
     public function create(){
@@ -70,7 +71,7 @@ class BusController extends Controller
         $data['new_buses'] = DB::table('new_buses')->find($id);
         return view('admins.admin_buses.edit', $data);
     }
-    
+
     public function update(Request $request){
         $data['plate_number'] = $request->plate_number;
         $data['bus_type'] = $request->bus_type;
@@ -96,5 +97,7 @@ class BusController extends Controller
             return redirect()->route('admin.admin_bus');
         }
     }
+
+
 
 }

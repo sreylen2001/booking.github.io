@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Endpoint;
 
 use App\Http\Controllers\Controller;
+use App\Models\Models\Booking;
 use App\Models\Models\Bus;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +19,7 @@ class EpBusController extends Controller
             'plate_number' => 'required|string|max:255',
             'bus_type' => 'required|string|max:255',
             'capacity' => 'required|int|max:255',
-            'bus_status' => 'max:255'
+            'status' => 'boolean'
             
         ]);
 
@@ -33,7 +36,8 @@ class EpBusController extends Controller
             'plate_number' => $request->plate_number,
             'bus_type' => $request->bus_type,
             'capacity' => $request->capacity,
-            'bus_status' => $request->bus_status,
+            'book_seat'=> $request->book_seat,
+            'status' => $request->status,
         ]);
 
         $bus->load('user');        
@@ -92,7 +96,8 @@ class EpBusController extends Controller
     //Get Detail
     public function detail($id)
     {
-        $data['new_buses'] = DB::table('new_buses')->where('id', $id)->first();
+        $data = Bus::query()->findOrFail($id);
+        $data['book_seat'] = $this->generateBusSeat($id);
         if($data){
             return response()->json([
                 'message' => 'Bus successfully fetched!',
@@ -104,5 +109,61 @@ class EpBusController extends Controller
 
             ], 404);
         }
+    }
+
+    public function busAllAvailable(): JsonResponse
+    {
+        $today = now()->setTime(0,0,0,0);
+        $buses = Bus::query()->where('created_at', '>=', $today)->get();
+        $busAvailable = collect();
+        foreach ($buses as $bus) {
+            $booking = Booking::query()->where('bus_id', $bus['id'])->where('created_at', '>=', $today)->get()->toArray();
+            if(count($booking) < $bus['capacity']) {
+                $busAvailable->push($bus);
+            }
+        }
+        return $this->success($busAvailable, 'Get Bus Available');
+    }
+
+    public function generateBusSeat($busID): Collection
+    {
+        $bus = Bus::query()->findOrFail($busID)->first();
+        $today = now()->setTime(0,0,0,0);
+        $bus_seats = collect();
+        $booking = Booking::query()->where('bus_id', $busID)->where('created_at', '>=', $today)->get()->toArray();
+        $test = count($booking);
+        if($bus['capacity'] > 0) {
+            for($i = 0; $i < $bus['capacity']; $i++) {
+
+                if(count($booking) > 0) {
+                    $is_true = false;
+                    foreach ($booking as $book) {
+                        if($book['number_of_seats'] === ($i + 1)) {
+                            $bus_seats->push([
+                                'bus_seat' => $i + 1,
+                                'status' => true
+                            ]);
+                            $is_true = true;
+                            break;
+                        }
+                    }
+
+                    if(!$is_true) {
+                        $bus_seats->push([
+                            'bus_seat' => $i + 1,
+                            'status' => false
+                        ]);
+                    }
+
+                } else {
+                    $bus_seats->push([
+                        'bus_seat' => $i + 1,
+                        'status' => false
+                    ]);
+                }
+            }
+        }
+
+        return $bus_seats;
     }
 }

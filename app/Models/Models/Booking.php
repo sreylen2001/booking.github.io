@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
-
     protected $table = 'new_bookings';
 
     protected $fillable = [
@@ -17,6 +16,8 @@ class Booking extends Model
         'bus_id',
         'number_of_seats',
         'total_amount',
+        'payment_amount',
+        'payment_by',
         'status',
         'created_at',
         'update_at'
@@ -30,7 +31,7 @@ class Booking extends Model
         return $this->belongsTo(Bus::class);
     }
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function scopeGettable()
     {

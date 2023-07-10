@@ -18,9 +18,18 @@ class UserController extends Controller
     }
     
     public function index(Request $request): View{
-        $data['new_users'] = DB::table('new_users')->where('status', '1')->paginate(5);
-
-        return view('admins.admin_users.index', $data);
+        $search = $request['search'] ?? "";
+        if($search != ""){
+            $users = User::where('name', 'LIKE', "%$search%")
+            ->orWhere('email', 'LIKE', "%$search%")
+            ->orWhere('phone', 'LIKE', "%$search%")
+            ->orWhere('gender', 'LIKE', "%$search%")->get();
+        } else{
+            $users = User::all();
+            $users = User::paginate(5);
+        }
+        $user = compact('users', 'search');
+        return view('admins.admin_users.index', $user);
         
     }
 

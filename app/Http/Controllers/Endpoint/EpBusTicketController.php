@@ -13,13 +13,12 @@ class EpBusTicketController extends Controller
      //create
      public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'bus_id' => 'required|string|max:255',
+            'bus_id' => 'required',
             'from' => 'required|string|max:255',
             'to' => 'required|string|max:255',
             'fare_amount' => 'required|int|max:255',
             'departure_time' => 'max:255',
             'estimated_arrival_time' => 'max:255'
-            
         ]);
 
         if($validator->fails()){
@@ -38,7 +37,6 @@ class EpBusTicketController extends Controller
             'estimated_arrival_time' => $request->estimated_arrival_time
         ]);
 
-        $busticket->load('bus');        
         return response()->json([
             'message' => 'Bus Ticket successfully created!',
             'data' => $busticket

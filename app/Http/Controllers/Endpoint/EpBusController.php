@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Models\Booking;
 use App\Models\Models\Bus;
 use App\Models\Models\BusTicket;
+use App\Models\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -95,7 +96,7 @@ class EpBusController extends Controller
     }
 
     //Get Detail
-    public function detail($id)
+    public function detail($id): JsonResponse
     {
         $data = Bus::query()->findOrFail($id);
         $data['book_seat'] = $this->generateBusSeat($id);
@@ -120,28 +121,51 @@ class EpBusController extends Controller
         foreach ($buses as $bus) {
             $booking = Booking::query()->where('bus_id', $bus['id'])->where('created_at', '>=', $today)->get()->toArray();
             if(count($booking) < $bus['capacity']) {
-                $busAvailable->push($bus);
+                $busAvailable->push($this->busFormat($bus));
             }
         }
         return $this->success($busAvailable, 'Get Bus Available');
     }
 
+
+    public function busFormat(Bus $bus): array
+    {
+        $user = User::query()->findOrFail($bus['user_id']);
+        return [
+            'id' => $bus['id'],
+            'user_id' => [$user],
+            'plate_number' => $bus['plate_number'],
+            'bus_type' => $bus['bus_type'],
+            'capacity' => $bus['capacity'],
+            'book_seat' => $bus['book_seat'],
+            'bus_ticket' => $this->getBusTicket($bus['id']),
+            'status' => $bus['status'],
+            'created_at' => $bus['created_at'],
+            'updated_at' => $bus['updated_at']
+        ];
+    }
+
+    public function getBusTicket($busID): \Illuminate\Database\Eloquent\Collection|array
+    {
+        $today = now()->setTime(0,0,0,0);
+        return BusTicket::query()->where('bus_id', $busID)->where('created_at', '>=', $today)->get()->toArray();
+    }
+
     public function generateBusSeat($busID): Collection
     {
-        $bus = Bus::query()->findOrFail($busID)->first();
+        $bus = Bus::query()->findOrFail($busID);
         $today = now()->setTime(0,0,0,0);
         $bus_seats = collect();
         $booking = Booking::query()->where('bus_id', $busID)->where('created_at', '>=', $today)->get()->toArray();
-        $test = count($booking);
-        if($bus['capacity'] > 0) {
-            for($i = 0; $i < $bus['capacity']; $i++) {
 
+        if($bus['capacity'] > 0) {
+            for($i = 1; $i <= $bus['capacity']; $i++) {
                 if(count($booking) > 0) {
                     $is_true = false;
                     foreach ($booking as $book) {
-                        if($book['number_of_seats'] === ($i + 1)) {
+                        if($book['number_of_seats'] === ($i)) {
                             $bus_seats->push([
-                                'bus_seat' => $i + 1,
+                                'bus_seat' => $i,
                                 'status' => true
                             ]);
                             $is_true = true;
@@ -151,14 +175,14 @@ class EpBusController extends Controller
 
                     if(!$is_true) {
                         $bus_seats->push([
-                            'bus_seat' => $i + 1,
+                            'bus_seat' => $i,
                             'status' => false
                         ]);
                     }
 
                 } else {
                     $bus_seats->push([
-                        'bus_seat' => $i + 1,
+                        'bus_seat' => $i,
                         'status' => false
                     ]);
                 }
@@ -167,7 +191,8 @@ class EpBusController extends Controller
 
         return $bus_seats;
     }
-    public function searchBusFromTo(Request $request) {
+    public function searchBusFromTo(Request $request): JsonResponse
+    {
         $data = $request->validate([
             'from' => 'required',
             'to' => 'required'
@@ -182,7 +207,7 @@ class EpBusController extends Controller
             foreach ($buses as $item) {
                 $booking = Booking::query()->where('bus_id', $item['id'])->where('created_at', '>=', $today)->get()->toArray();
                 if(count($booking) < $item['capacity']) {
-                    $busAvailable->push($item);
+                    $busAvailable->push($this->busFormat($item));
                 }
             }
         }

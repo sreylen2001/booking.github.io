@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Endpoint;
 use App\Http\Controllers\Controller;
 use App\Models\Models\Booking;
 use App\Models\Models\Bus;
+use App\Models\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,39 @@ class EpBookingController extends Controller
         $today = now();
         $userID = Auth::id();
         $booking = Booking::query()->where('user_id', $userID)->get();
+
+        $bookings = collect();
+        foreach ($booking as $book) {
+            $bookings->push($this->bookingDetail($book));
+        }
 //        dd($booking);
-        return $this->success($booking, 'Get Booking history');
+
+        return $this->success($bookings, 'Get Booking history');
+    }
+
+    private function bookingDetail(Booking $booking): array
+    {
+        $user = User::query()->findOrFail($booking['user_id'])->toArray();
+        $bus = Bus::query()->findOrFail($booking['bus_id']);
+        if($bus) {
+            $buses = (new EpBusController())->busFormat($bus);
+        } else {
+            $buses = [];
+        }
+
+        return [
+            'id' => $booking['id'],
+            'user_id' => $user,
+            'bus_id' => $buses,
+            'number_of_seats' => $booking['number_of_seats'],
+            'total_amount' => $booking['total_amount'],
+            'payment_amount' => $booking['payment_amount'],
+            'payment_by' => $booking['payment_by'],
+            'status' => $booking['status'],
+            'created_at' => $booking['created_at'],
+            'update_at' => $booking['update_at']
+        ];
+
     }
 
     public function getAllUserBookingHistory(): JsonResponse

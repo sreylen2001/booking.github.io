@@ -17,7 +17,7 @@ class EpBusTicketController extends Controller
             'from' => 'required|string|max:255',
             'to' => 'required|string|max:255',
             'fare_amount' => 'required|int|max:255',
-            'departure_time' => 'max:255',
+            'departure_time' => 'required',
             'estimated_arrival_time' => 'max:255'
         ]);
 
@@ -27,7 +27,7 @@ class EpBusTicketController extends Controller
                 'errors' => $validator->messages()
             ], 422);
         }
-
+        
         $busticket = BusTicket::create([
             'bus_id' => $request->bus_id,
             'from' => $request->from,

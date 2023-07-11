@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('from');
             $table->string('to');
             $table->double('fare_amount');
-            $table->date('departure_time');
+            $table->dateTime('departure_time');
             $table->time('estimated_arrival_time');
 
             $table->foreign('bus_id')->references('id')->on('new_buses');

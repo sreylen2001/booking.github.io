@@ -46,12 +46,23 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label class="col-sm-3 col-form-label" for="bus_status">Bus Status</label>
+                                <label class="col-sm-3 col-form-label" for="book_seat">Bus Seat</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="bus_status" id="bus_status">
+                                    <input type="number" class="form-control" name="book_seat" id="book_seat">
                                 </div>
                             </div>
-
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" for="bus_id">Bus Status</label>
+                                <div class="col-sm-9">
+                                    <select class="default-select form-control wide mb-3" id="status" name="status">
+                                        <option value="1" selected="true" disabled="true">Select Bus Status</option>
+                    
+                                            <option value="1">true</option>
+                                            <option value="0">false</option>
+       
+                                    </select>
+                                </div>
+                            </div>
                             <br>
                             <div class="mb-3 row">
                                 <div class="col-sm-10">

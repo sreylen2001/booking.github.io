@@ -48,7 +48,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="departure_time">Departure Time</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="timepicker" name="departure_time" id="departure_time">
+                                    <input class="form-control" type="text" name="departure_time" id="departure_time">
                                 </div>
                             </div>
                             <div class="mb-3 row">

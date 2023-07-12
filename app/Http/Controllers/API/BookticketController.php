@@ -16,10 +16,10 @@ class BookticketController extends Controller
     public function index(){
 
         $data['new_buses'] = DB::table('new_buses')->get();
-        $data['new_payments'] = DB::table('new_payments')
-        ->where('payment_amount')
-        ->orWhere('payment_by')
-        ->get()->toArray();
+        // $data['new_payments'] = DB::table('new_payments')
+        // ->where('payment_amount')
+        // ->orWhere('payment_by')
+        // ->get()->toArray();
         //dd($data['new_payments']);
         $data['new_bookings'] = DB::table('new_bookings')->paginate(5);
         return view('admins.user_bookings.index', $data);

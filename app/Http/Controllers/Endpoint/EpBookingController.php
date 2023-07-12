@@ -17,9 +17,9 @@ class EpBookingController extends Controller
      */
     public function getBookingHistory(): JsonResponse
     {
-        $today = now();
+        $today = now()->setTime(0,0,0,0);
         $userID = Auth::id();
-        $booking = Booking::query()->where('user_id', $userID)->get();
+        $booking = Booking::query()->where('user_id', $userID)->where('created_at','<' ,$today)->get();
 
         $bookings = collect();
         foreach ($booking as $book) {
@@ -28,6 +28,21 @@ class EpBookingController extends Controller
 //        dd($booking);
 
         return $this->success($bookings, 'Get Booking history');
+    }
+
+    public function getBookingHistoryNew(): JsonResponse
+    {
+        $today = now()->setTime(0,0,0,0);
+        $userID = Auth::id();
+        $booking = Booking::query()->where('user_id', $userID)->where('created_at','>=' ,$today)->get();
+
+        $bookings = collect();
+        foreach ($booking as $book) {
+            $bookings->push($this->bookingDetail($book));
+        }
+//        dd($booking);
+
+        return $this->success($bookings, 'Get Booking history new');
     }
 
     private function bookingDetail(Booking $booking): array

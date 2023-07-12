@@ -93,6 +93,7 @@ Route::group([
 //            Route::get('booking/list', [ApiBookbusController::class, 'list']);
             Route::post('booking', [EpBookingController::class, 'booking']);
             Route::get('booking-history', [EpBookingController::class, 'getBookingHistory']);
+            Route::get('booking-history-now', [EpBookingController::class, 'getBookingHistoryNew']);
             Route::get('booking-all-user-history', [EpBookingController::class, 'getAllUserBookingHistory']);
 
             //Payment

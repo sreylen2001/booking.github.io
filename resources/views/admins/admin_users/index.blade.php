@@ -6,13 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Table of Users</h4>
-                    <li class="nav-item d-flex align-items-center">
-                        <div class="input-group search-area">
-                            <input type="search" name="search" class="form-control" placeholder="Search here..." value="{{$search}}">
-                            {{-- <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span> --}}
-                            <button class="btn btn-primary">Search</button>
-                        </div>
-                    </li>
+                   
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

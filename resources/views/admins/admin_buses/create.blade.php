@@ -55,10 +55,10 @@
                                 <label class="col-sm-3 col-form-label" for="bus_id">Bus Status</label>
                                 <div class="col-sm-9">
                                     <select class="default-select form-control wide mb-3" id="status" name="status">
-                                        <option value="1" selected="true" disabled="true">Select Bus Status</option>
+                                        <option value="true" selected="true" disabled="true">Select Bus Status</option>
                     
-                                            <option value="1">true</option>
-                                            <option value="0">false</option>
+                                            <option value="true">true</option>
+                                            <option value="false">false</option>
        
                                     </select>
                                 </div>

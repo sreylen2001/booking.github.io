@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('fare_amount');
             $table->dateTime('departure_time');
             $table->time('estimated_arrival_time');
-
+            $table->boolean('status')->default(true);
             $table->foreign('bus_id')->references('id')->on('new_buses');
             $table->timestamps();
         });

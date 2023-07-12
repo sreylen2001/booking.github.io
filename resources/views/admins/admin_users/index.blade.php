@@ -7,9 +7,10 @@
                 <div class="card-header">
                     <h4 class="card-title">Table of Users</h4>
                     <li class="nav-item d-flex align-items-center">
-                        <div class="input-group search-area" type="get" action="{{route('search.user')}}">
-                            <input type="search" name="search" class="form-control" placeholder="Search here...">
-                            <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
+                        <div class="input-group search-area">
+                            <input type="search" name="search" class="form-control" placeholder="Search here..." value="{{$search}}">
+                            {{-- <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span> --}}
+                            <button class="btn btn-primary">Search</button>
                         </div>
                     </li>
                 </div>
@@ -32,7 +33,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($new_users as $item)
+                                @foreach ($users as $item)
                                 <tr>
                                     <td><strong>{{ $item->id }}</strong></td>
                                     <td>{{ $item->name }}</td>
@@ -80,13 +81,13 @@
                         <footer>
                             <div class="row">
                                 <div class="col-7">
-                                    <p>showing {{ $new_users->firstItem() }} - {{ $new_users->lastItem() }} of {{ $new_users->total() }}</p>
+                                    <p>showing {{ $users->firstItem() }} - {{ $users->lastItem() }} of {{ $users->total() }}</p>
                                 </div>
 
                                 <div class="col-5">
                                     <div class="float-end">
                                         <ul class="pagination pagination-xs pagination-gutter">
-                                            {{$new_users->links()}}
+                                            {{$users->links()}}
                                             {{-- <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{$users->links()}}</a>
                                             </li> --}}
                                         

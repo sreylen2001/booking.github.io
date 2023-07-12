@@ -50,6 +50,12 @@ Route::group([
         Route::post('stripe', [StripeController::class, 'payment']);
 // Route::get('check', [StripePaymentController::class, 'getData']);
 
+        //Bus public
+
+        Route::get('bus-available', [EpBusController::class, 'busAllAvailable']);
+        Route::get('bus/available', [EpBusController::class, 'searchBusFromTo']);
+        Route::get('bus/detail/{id}', [EpBusController::class, 'detail']);
+
         Route::middleware(['auth:sanctum'])->group(function(){
 
             //User getBookingHistory
@@ -57,9 +63,7 @@ Route::group([
 
             //Bus Information
             Route::post('bus/create', [EpBusController::class, 'create']);
-            Route::get('bus/detail/{id}', [EpBusController::class, 'detail']);
             Route::get('bus/list', [EpBusController::class, 'list']);
-            Route::get('bus-available', [EpBusController::class, 'busAllAvailable']);
 
             //Bus ticket Information
             Route::post('ticket/create', [EpBusTicketController::class, 'create']);
@@ -89,6 +93,7 @@ Route::group([
 //            Route::get('booking/list', [ApiBookbusController::class, 'list']);
             Route::post('booking', [EpBookingController::class, 'booking']);
             Route::get('booking-history', [EpBookingController::class, 'getBookingHistory']);
+            Route::get('booking-history-now', [EpBookingController::class, 'getBookingHistoryNew']);
             Route::get('booking-all-user-history', [EpBookingController::class, 'getAllUserBookingHistory']);
 
             //Payment

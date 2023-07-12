@@ -27,6 +27,10 @@ class Bus extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function new_bus_ticket(){
+        return $this->hasOne(BusTicket::class);
+    }
+
     public function scopeGettable()
     {
         return $this->table;

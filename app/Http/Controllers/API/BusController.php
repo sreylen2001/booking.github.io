@@ -24,7 +24,7 @@ class BusController extends Controller
         ->get()->toArray();
         //dd($se);
         $data['new_users'] = DB::table('new_users')->get()->toArray();
-        $data['new_buses'] = DB::table('new_buses')->where('status', '1')->paginate(5);
+        $data['new_buses'] = DB::table('new_buses')->paginate(5);
         //$MergeArray = $se->merge($data);
         //$MergeArray = array_merge($isConnectedM,$isConnectedA);
         return view('admins.admin_buses.index',$data);
@@ -48,7 +48,8 @@ class BusController extends Controller
         $data['plate_number'] = $request->plate_number;
         $data['bus_type'] = $request->bus_type;
         $data['capacity'] = $request->capacity;
-        $data['bus_status'] = $request->bus_status;
+        $data['book_seat'] = $request->book_seat;
+        $data['status'] = $request->status;
         $i = DB::table('new_buses')->insert($data);
 
         if($i){
@@ -76,6 +77,7 @@ class BusController extends Controller
         $data['plate_number'] = $request->plate_number;
         $data['bus_type'] = $request->bus_type;
         $data['capacity'] = $request->capacity;
+        $data['book_seat'] = $request->book_seat;
         //$data['bus_status'] = $request->bus_status;
         $i = DB::table('new_buses')->where('id', $request->id)->update($data);
         if($i){

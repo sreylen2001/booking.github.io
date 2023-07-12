@@ -27,7 +27,8 @@
                                     <th><strong>Plate Number</strong></th>
                                     <th><strong>Bus Type</strong></th>
                                     <th><strong>Capacity</strong></th>
-                                    <th><strong>Bus Status</strong></th>
+                                    <th><strong>Bus Seat</strong></th>
+                                    <th><strong>Status</strong></th>
                                     <th><strong>Action</strong></th>
 
                                 </tr>
@@ -45,7 +46,8 @@
                                     <td>{{ $item->plate_number }}</td>
                                     <td>{{ $item->bus_type }}</td>
                                     <td>{{ $item->capacity }}</td>
-                                    <td>{{ $item->bus_status }}</td>
+                                    <td>{{ $item->book_seat }}</td>
+                                    <td>{{ $item->status }}</td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ url('admin/admins_bus/edit/'.$item->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
